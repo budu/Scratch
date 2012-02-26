@@ -11,12 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120226002304) do
+ActiveRecord::Schema.define(:version => 20120226052737) do
 
   create_table "nilify_test_models", :force => true do |t|
     t.string  "foo"
     t.string  "bar"
     t.integer "baz"
+  end
+
+  create_table "stripify_test_models", :force => true do |t|
+    t.string "foo"
+    t.string "bar"
   end
 
 end
