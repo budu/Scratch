@@ -9,11 +9,12 @@ Gem::Specification.new do |s|
   s.version     = Scratch::VERSION
   s.authors     = ["Nicolas Buduroi"]
   s.email       = ["nbuduroi@gmail.com"]
-  s.homepage    = "N/A"
-  s.summary     = "To relieve from some Rails itches."
-  s.description = "To relieve from some Rails itches."
+  s.homepage    = "github.com/budu/Scratch"
+  s.summary     = "A plugin to relieve from some Rails itches."
+  s.description = "A plugin to relieve from some Rails itches."
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = Dir["{app,config,db,lib}/**/*"] +
+    ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", "~> 3.2.1"
