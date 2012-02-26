@@ -2,7 +2,7 @@
 
 require_relative '../../test_helper.rb'
 
-class CoreExt::ArrayTest < Test::Unit::TestCase
+class Scratch::CoreExt::ArrayTest < Test::Unit::TestCase
 
   def setup
     @sep = $,

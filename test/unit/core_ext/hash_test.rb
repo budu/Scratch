@@ -2,7 +2,7 @@
 
 require_relative '../../test_helper.rb'
 
-class CoreExt::HashTest < Test::Unit::TestCase
+class Scratch::CoreExt::HashTest < Test::Unit::TestCase
 
   def setup
     @h  = { a: [1, 2, 3], b: [4, 5] }
