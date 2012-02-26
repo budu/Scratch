@@ -1,0 +1,3 @@
+
+module Scratch::Concerns
+end
