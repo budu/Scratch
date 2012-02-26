@@ -4,6 +4,14 @@ module Scratch::Concerns::Nilify
   extend ActiveSupport::Concern
 
   module ClassMethods
+    def self.extended(base)
+      base.cattr_accessor :nilify_attributes_source
+      base.nilify_attributes_source =
+        if base == ActiveRecord::Base
+          -> base { base.content_columns.map(&:name) }
+        end
+    end
+
     def nilify(options = {})
       options = HashWithIndifferentAccess.new options
 
@@ -11,7 +19,7 @@ module Scratch::Concerns::Nilify
       before     = options[:before] || :validation
       callback   = "nilify_before_#{before}_if_#{pred}"
       attributes = Scratch::Options
-        .except_only options, content_columns.map(&:name)
+        .except_only options, nilify_attributes_source[self]
 
       instance_eval do
         define_method callback do
