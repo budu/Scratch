@@ -7,16 +7,11 @@ module Scratch::Concerns::Nilify
     def nilify(options = {})
       options = HashWithIndifferentAccess.new options
 
-      %w(except only).each do |key|
-        options[key] = Array.wrap(options[key]).map &:to_s if options[key]
-      end
-
-      attributes = options[:only] || content_columns.map(&:name)
-      attributes = attributes - options[:except] if options[:except]
-
-      pred     = options[:pred]   || :blank?
-      before   = options[:before] || :validation
-      callback = "nilify_before_#{before}_if_#{pred}"
+      pred       = options[:pred]   || :blank?
+      before     = options[:before] || :validation
+      callback   = "nilify_before_#{before}_if_#{pred}"
+      attributes = Scratch::Options
+        .except_only options, content_columns.map(&:name)
 
       instance_eval do
         define_method callback do
