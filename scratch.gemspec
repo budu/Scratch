@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.version     = Scratch::VERSION
   s.authors     = ["Nicolas Buduroi"]
   s.email       = ["nbuduroi@gmail.com"]
-  s.homepage    = "github.com/budu/Scratch"
+  s.homepage    = "http://github.com/budu/Scratch"
   s.summary     = "A plugin to relieve from some Rails itches."
   s.description = "A plugin to relieve from some Rails itches."
 
