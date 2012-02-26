@@ -3,15 +3,15 @@ module Scratch::Concerns::Stripify
 
   extend ActiveSupport::Concern
 
-  module ClassMethods
-    def self.extended(base)
-      base.cattr_accessor :stripify_attributes_source
-      base.stripify_attributes_source =
-        if base == ActiveRecord::Base
-          -> base { base.content_columns.map(&:name) }
-        end
-    end
+  included do
+    cattr_accessor :stripify_attributes_source
+    self.stripify_attributes_source =
+      if self == ActiveRecord::Base
+        -> base { base.content_columns.map(&:name) }
+      end
+  end
 
+  module ClassMethods
     def stripify(options = {})
       options = HashWithIndifferentAccess.new options
 

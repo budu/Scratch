@@ -3,15 +3,15 @@ module Scratch::Concerns::Nilify
 
   extend ActiveSupport::Concern
 
-  module ClassMethods
-    def self.extended(base)
-      base.cattr_accessor :nilify_attributes_source
-      base.nilify_attributes_source =
-        if base == ActiveRecord::Base
-          -> base { base.content_columns.map(&:name) }
-        end
-    end
+  included do
+    cattr_accessor :nilify_attributes_source
+    self.nilify_attributes_source =
+      if self == ActiveRecord::Base
+        -> base { base.content_columns.map(&:name) }
+      end
+  end
 
+  module ClassMethods
     def nilify(options = {})
       options = HashWithIndifferentAccess.new options
 
