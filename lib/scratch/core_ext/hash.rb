@@ -12,7 +12,7 @@ Hash.class_eval do
       end
     end
 
-    return options[:default] if options[:default]
+    return options[:default] if options.has_key? :default
     raise KeyError, ("keys not found: %s" % keys.inspect)
   end
 

@@ -14,6 +14,7 @@ class Scratch::CoreExt::HashTest < Test::Unit::TestCase
     assert_equal :b, @is.fetch_or(7, 6, 5)
     assert_equal :c, @is.fetch_or(9, 8, default: :c)
     assert_raise(KeyError) { @is.fetch_or(10) }
+    assert_equal nil, {}.fetch_or(0, default: nil)
   end
 
   def test_invert_splat
