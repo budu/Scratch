@@ -34,5 +34,3 @@ module Scratch::Concerns::Stripify
   end
 
 end
-
-ActiveRecord::Base.send :include, Scratch::Concerns::Stripify

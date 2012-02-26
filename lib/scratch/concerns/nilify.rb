@@ -35,5 +35,3 @@ module Scratch::Concerns::Nilify
   end
 
 end
-
-ActiveRecord::Base.send :include, Scratch::Concerns::Nilify
