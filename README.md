@@ -3,7 +3,7 @@
 After seeing a presentation (by [Gary Haran]) on Rails engines and
 reading a [certain blog post], I decided that enough was enough! I had
 some Rails induced itches that needed some much needed relief. Thus here
-is Scratch, a library which tries to fix a bunch of relatively
+is Scratch, a library which tries to fix a bunch of Rails' most
 insignificant shortcomings.
 
 ## Features
@@ -20,6 +20,59 @@ gem 'scratch'
 ```
 
 ## Usage
+
+### Mixins (or Concerns if you prefer the Rails vocabulary)
+
+These mixins are included in ActiveRecord with this gem, they could
+(theoretically) be used inside any other classes, but this hasn't been
+tested (nor documented) yet.
+
+#### Normalize
+
+The `normalize` method help you create callbacks to normalize some
+attributes in a simple declarative manner.
+
+Say you'd like to set all blank attributes to nil before validation, you
+could do:
+
+```ruby
+normalize before: :validation, predicate: :blank?, default: nil
+```
+
+The `before` option default to `:validation` so it can be omitted in
+that case. You can also pass a block to `normalize` that will be given
+the value of the attribute and should return it's normalized form:
+
+```ruby
+normalize { |value| value.strip }
+```
+
+The block in that example is a common pattern that can be replaced by
+the `method` option:
+
+```ruby
+normalize method: :strip
+```
+
+There's two specialized mixins which are variant of the above
+examples...
+
+##### Stripify
+
+The `stripify` method will strip all attributes, it also support all of
+normalize options. Here's an example using the `except` option:
+
+```ruby
+stripify except: :foo
+```
+
+##### Nilify
+
+Don't like odd numbers, here's a solution:
+
+```ruby
+nilify only: [:foo, :bar], predicate: :odd?, before: :save
+```
 
 ### Core Extensions
 
