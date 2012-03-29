@@ -2,6 +2,6 @@
 class NilifyTestModel < ActiveRecord::Base
 
   nilify except: [:foo, :baz]
-  nilify only: :baz, predicate: :odd?, before: :save
+  nilify only: :baz, when: :odd?, before: :save
 
 end

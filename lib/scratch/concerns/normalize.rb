@@ -24,7 +24,7 @@ module Scratch::Concerns::Normalize
       options   = callback_options.slice!(:if, :unless)
       set       = options[:set]
       method    = options[:method]
-      predicate = Array.wrap options[:predicate]
+      predicate = Array.wrap options[:when]
 
       trigger_format = options[:trigger_format] || '%s_%s'
 

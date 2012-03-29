@@ -7,10 +7,10 @@ module Scratch::Concerns::Nilify
     def nilify(options = {})
       options = HashWithIndifferentAccess.new options
 
-      options[:before]    ||= :validation
-      options[:predicate] ||= :blank?
-      options[:name]      ||=
-        "nilify_before_#{options[:before]}_if_#{options[:predicate]}"
+      options[:before] ||= :validation
+      options[:when]   ||= :blank?
+      options[:name]   ||=
+        "nilify_before_#{options[:before]}_when_#{options[:when]}"
 
       instance_eval do
         normalize options.merge(set: nil)

@@ -13,8 +13,8 @@ class Scratch::Concerns::NilifyTest < Test::Unit::TestCase
   end
 
   def test_callbacks_methods_are_defined
-    assert @entity.respond_to? :nilify_before_validation_if_blank?
-    assert @entity.respond_to? :nilify_before_save_if_odd?
+    assert_respond_to @entity, :nilify_before_validation_when_blank?
+    assert_respond_to @entity, :nilify_before_save_when_odd?
   end
 
   def test_effect_of_triggering_validation_callback
