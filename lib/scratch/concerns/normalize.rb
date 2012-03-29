@@ -21,18 +21,25 @@ module Scratch::Concerns::Normalize
       callback_options = HashWithIndifferentAccess.new options
 
       options   = callback_options.slice!(:if, :unless)
-      default   = options[:default]
+      set       = options[:set]
       method    = options[:method]
       predicate = Array.wrap options[:predicate]
 
       trigger_format = options[:trigger_format] || '%s_%s'
 
-      trigger  = options[:trigger] ||
-        options[:before] ? trigger_format % [:before , options[:before]] :
-        options[:after]  ? trigger_format % [:after  , options[:before]] : nil
+      trigger = options[:trigger] ||
+        (options[:before] ? trigger_format % [:before , options[:before]] :
+         options[:after]  ? trigger_format % [:after  , options[:after]]  :
+         raise(ArgumentError, 'missing option, you must specify one of: ' +
+               'before, after or trigger'))
+
+      unless options.has_key?(:set) || method || block_given?
+        raise(ArgumentError, 'missing option or block, ' +
+              'you must give a block or specify one of: set or method')
+      end
 
       callback = options[:name] ||
-        "normalize_before_#{trigger}" +
+        "normalize_#{trigger}" +
         (predicate.empty? ? '' : "_when_#{predicate}")
 
       attributes = options[:attributes] ||
@@ -45,8 +52,8 @@ module Scratch::Concerns::Normalize
             value = send(attribute)
             if predicate.empty? || value.send(*predicate)
               value =
-                if options.has_key? :default
-                  default
+                if options.has_key? :set
+                  set
                 elsif method
                   value.send method
                 else

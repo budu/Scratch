@@ -13,7 +13,7 @@ module Scratch::Concerns::Nilify
         "nilify_before_#{options[:before]}_if_#{options[:predicate]}"
 
       instance_eval do
-        normalize options.merge(default: nil)
+        normalize options.merge(set: nil)
       end
     end
   end
