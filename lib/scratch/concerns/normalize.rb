@@ -14,12 +14,6 @@ module Scratch::Concerns::Normalize
       if self == ActiveRecord::Base
         -> base { base.content_columns.map(&:name) }
       end
-
-    cattr_accessor :normalize_default_callback_format
-    self.normalize_default_callback_format =
-      if self == ActiveRecord::Base
-        'before_%s'
-      end
   end
 
   module ClassMethods
@@ -30,11 +24,15 @@ module Scratch::Concerns::Normalize
       default   = options[:default]
       method    = options[:method]
       predicate = Array.wrap options[:predicate]
-      callback  = options.fetch_or(:before, :after, :callback,
-                                   default: :validation)
 
-      callback_method = options[:name] ||
-        "normalize_before_#{callback}" +
+      trigger_format = options[:trigger_format] || '%s_%s'
+
+      trigger  = options[:trigger] ||
+        options[:before] ? trigger_format % [:before , options[:before]] :
+        options[:after]  ? trigger_format % [:after  , options[:before]] : nil
+
+      callback = options[:name] ||
+        "normalize_before_#{trigger}" +
         (predicate.empty? ? '' : "_when_#{predicate}")
 
       attributes = options[:attributes] ||
@@ -42,7 +40,7 @@ module Scratch::Concerns::Normalize
           .except_only(options, normalize_default_attributes_source[self])
 
       instance_eval do
-        define_method callback_method do
+        define_method callback do
           attributes.each do |attribute|
             value = send(attribute)
             if predicate.empty? || value.send(*predicate)
@@ -61,11 +59,7 @@ module Scratch::Concerns::Normalize
         end
       end
 
-      callback_format = options[:callback_format] ||
-        normalize_default_callback_format
-
-      callback = callback_format ? callback_format % callback : callback
-      send callback, callback_method
+      send trigger, callback
     end
   end
 
