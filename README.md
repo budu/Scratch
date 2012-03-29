@@ -36,7 +36,7 @@ Say you'd like to set all blank attributes to nil before validation, you
 could do:
 
 ```ruby
-normalize before: :validation, predicate: :blank?, default: nil
+normalize before: :validation, when: :blank?, set: nil
 ```
 
 The `before` option default to `:validation` so it can be omitted in
@@ -71,7 +71,7 @@ stripify except: :foo
 Don't like odd numbers, here's a solution:
 
 ```ruby
-nilify only: [:foo, :bar], predicate: :odd?, before: :save
+nilify only: [:foo, :bar], when: :odd?, before: :save
 ```
 
 ### Core Extensions
