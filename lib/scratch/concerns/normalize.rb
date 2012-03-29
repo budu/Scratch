@@ -1,3 +1,4 @@
+require 'scratch/utils'
 
 # == Normalize Callbacks
 #
@@ -38,9 +39,7 @@ module Scratch::Concerns::Normalize
               'you must give a block or specify one of: set or method')
       end
 
-      callback = options[:name] ||
-        "normalize_#{trigger}" +
-        (predicate.empty? ? '' : "_when_#{predicate}")
+      callback = options[:name] || Scratch::Utils.gensym
 
       attributes = options[:attributes] ||
         Scratch::Options

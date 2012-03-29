@@ -3,7 +3,8 @@ class NormalizeTestModel < ActiveRecord::Base
 
   normalize(after: :save,
             only:  :foo,
-            set:   'foo')
+            set:   'foo',
+            name:  :normalize_after_save)
 
   normalize(before: :validation,
             only:   :bar,
